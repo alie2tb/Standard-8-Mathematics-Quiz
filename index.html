@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Standard 8 Maths — Practice Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0F1117;
+  --surface: #1A1D27;
+  --surface2: #22263A;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --text: #F0F2FF;
+  --muted: #8890AA;
+  --accent: #6C63FF;
+  --accent2: #8B84FF;
+  --accent-bg: rgba(108,99,255,0.12);
+  --gold: #FFB547;
+  --gold-bg: rgba(255,181,71,0.12);
+  --green: #22C55E;
+  --green-bg: rgba(34,197,94,0.12);
+  --red: #EF4444;
+  --red-bg: rgba(239,68,68,0.12);
+  --blue: #3B82F6;
+  --blue-bg: rgba(59,130,246,0.12);
+  --r: 12px;
+  --r-lg: 18px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── GLOW BG ── */
+body::before{
+  content:'';
+  position:fixed;
+  top:-200px;left:50%;
+  transform:translateX(-50%);
+  width:800px;height:500px;
+  background:radial-gradient(ellipse,rgba(108,99,255,0.12) 0%,transparent 70%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ── HEADER ── */
+.hdr{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.85rem 1.5rem;
+  background:rgba(15,17,23,0.85);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.hdr-brand{display:flex;align-items:center;gap:0.6rem;}
+.hdr-icon{
+  width:34px;height:34px;border-radius:8px;
+  background:linear-gradient(135deg,var(--accent),#9B88FF);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;font-weight:800;color:#fff;
+  font-family:'JetBrains Mono',monospace;
+}
+.hdr-title{
+  font-size:0.82rem;font-weight:700;
+  color:var(--text);letter-spacing:0.02em;
+}
+.hdr-sub{
+  font-size:0.62rem;color:var(--muted);
+  font-family:'JetBrains Mono',monospace;
+  letter-spacing:0.06em;
+}
+.hdr-right{display:flex;align-items:center;gap:0.5rem;}
+.pill{
+  padding:0.25rem 0.75rem;border-radius:20px;
+  font-size:0.65rem;font-family:'JetBrains Mono',monospace;
+  letter-spacing:0.08em;background:var(--surface2);
+  border:1px solid var(--border);color:var(--muted);
+}
+.lb-btn{
+  display:flex;align-items:center;gap:0.4rem;
+  padding:0.35rem 0.85rem;border-radius:8px;
+  background:var(--gold-bg);border:1px solid rgba(255,181,71,0.25);
+  color:var(--gold);font-size:0.72rem;font-weight:600;
+  cursor:pointer;transition:background 0.15s;font-family:inherit;
+}
+.lb-btn:hover{background:rgba(255,181,71,0.2);}
+
+/* ── MAIN ── */
+.wrap{
+  position:relative;z-index:1;
+  max-width:640px;margin:0 auto;
+  padding:2rem 1rem 5rem;
+}
+
+/* ── SCREENS ── */
+.screen{display:none;}
+.screen.active{display:block;}
+
+/* ══════════════════════════════════
+   NAME SCREEN
+══════════════════════════════════ */
+.name-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,0.5);
+}
+.name-hero{
+  background:linear-gradient(135deg,#1A1D27 0%,#1E1B3A 100%);
+  padding:2.5rem 2rem 2rem;
+  text-align:center;
+  border-bottom:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
+}
+.name-hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(108,99,255,0.18) 0%,transparent 60%);
+}
+.name-badge{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  background:var(--accent-bg);border:1px solid rgba(108,99,255,0.3);
+  color:var(--accent2);font-size:0.65rem;font-family:'JetBrains Mono',monospace;
+  letter-spacing:0.12em;text-transform:uppercase;
+  padding:0.3rem 0.85rem;border-radius:20px;
+  margin-bottom:1.25rem;position:relative;
+}
+.name-title{
+  font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;
+  color:var(--text);line-height:1.1;margin-bottom:0.5rem;
+  position:relative;
+}
+.name-title span{
+  background:linear-gradient(90deg,var(--accent2),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.name-sub{
+  font-size:0.85rem;color:var(--muted);
+  line-height:1.6;position:relative;
+}
+.name-body{padding:2rem;}
+
+.name-label{
+  font-size:0.7rem;font-weight:600;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;
+  display:block;
+}
+.name-input{
+  width:100%;background:var(--surface2);
+  border:1.5px solid var(--border2);border-radius:var(--r);
+  padding:0.85rem 1rem;font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:1rem;font-weight:500;color:var(--text);
+  outline:none;transition:border-color 0.2s;margin-bottom:1.5rem;
+}
+.name-input::placeholder{color:var(--muted);}
+.name-input:focus{border-color:var(--accent);}
+
+.stats-strip{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0.6rem;margin-bottom:1.5rem;
+}
+.ss-tile{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--r);padding:0.85rem;text-align:center;
+}
+.ss-n{
+  font-size:1.4rem;font-weight:800;color:var(--text);
+  font-family:'JetBrains Mono',monospace;
+}
+.ss-l{
+  font-size:0.62rem;color:var(--muted);
+  text-transform:uppercase;letter-spacing:0.1em;margin-top:2px;
+}
+
+/* Paper selector */
+.paper-wrap{margin-bottom:1.5rem;}
+.paper-label{
+  font-size:0.7rem;font-weight:600;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem;
+  display:block;
+}
+.paper-opts{display:flex;flex-direction:column;gap:0.5rem;}
+.paper-opt{display:flex;align-items:center;gap:0.75rem;cursor:pointer;}
+.paper-opt input[type="radio"]{
+  width:16px;height:16px;accent-color:var(--accent);
+  cursor:pointer;flex-shrink:0;
+}
+.paper-chip{
+  background:var(--surface2);border:1.5px solid var(--border2);
+  border-radius:var(--r);padding:0.75rem 1rem;
+  display:flex;align-items:center;gap:0.85rem;flex:1;
+  transition:border-color 0.15s,background 0.15s;cursor:pointer;
+}
+.paper-opt input:checked + .paper-chip{
+  border-color:var(--accent);background:var(--accent-bg);
+}
+.pc-num{
+  width:30px;height:30px;border-radius:7px;
+  background:var(--surface);color:var(--muted);
+  font-family:'JetBrains Mono',monospace;font-weight:700;
+  font-size:0.9rem;display:flex;align-items:center;
+  justify-content:center;flex-shrink:0;
+  transition:background 0.15s,color 0.15s;
+}
+.paper-opt input:checked + .paper-chip .pc-num{
+  background:var(--accent);color:#fff;
+}
+.pc-info{display:flex;flex-direction:column;gap:2px;}
+.pc-title{font-weight:700;font-size:0.88rem;color:var(--text);}
+.pc-sub{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem;color:var(--muted);
+}
+.paper-opt input:checked + .paper-chip .pc-title{color:var(--accent2);}
+.paper-opt input:checked + .paper-chip .pc-sub{color:rgba(108,99,255,0.7);}
+
+.btn-primary{
+  width:100%;background:var(--accent);
+  color:#fff;border:none;padding:0.95rem;
+  border-radius:var(--r);font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:0.95rem;font-weight:700;cursor:pointer;
+  transition:background 0.2s,transform 0.15s,opacity 0.2s;
+  letter-spacing:0.02em;
+}
+.btn-primary:hover:not(:disabled){background:#5A52E8;transform:translateY(-2px);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+
+/* ══════════════════════════════════
+   QUIZ SCREEN
+══════════════════════════════════ */
+.q-topbar{
+  display:flex;align-items:center;gap:0.75rem;
+  margin-bottom:1.25rem;
+}
+.q-badge{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:6px;padding:0.3rem 0.65rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.72rem;color:var(--muted);white-space:nowrap;
+}
+.q-progress-wrap{
+  flex:1;height:6px;background:var(--surface2);
+  border-radius:3px;overflow:hidden;
+}
+.q-progress-fill{
+  height:100%;border-radius:3px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:width 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.q-player-chip{
+  display:flex;align-items:center;gap:0.4rem;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;padding:0.25rem 0.65rem;
+  font-size:0.7rem;color:var(--muted);white-space:nowrap;
+  max-width:120px;overflow:hidden;text-overflow:ellipsis;
+}
+.q-player-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green);flex-shrink:0;
+}
+
+.q-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:1.75rem;
+  margin-bottom:1rem;
+  box-shadow:0 8px 32px rgba(0,0,0,0.3);
+  animation:slideUp 0.25s ease;
+}
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.q-meta{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1rem;
+}
+.q-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;
+}
+.q-paper-tag{
+  font-family:'JetBrains Mono',monospace;font-size:0.62rem;
+  background:var(--accent-bg);color:var(--accent2);
+  padding:2px 8px;border-radius:4px;letter-spacing:0.04em;
+}
+.q-text{
+  font-size:clamp(1rem,2.5vw,1.1rem);font-weight:700;
+  color:var(--text);line-height:1.55;margin-bottom:1.5rem;
+}
+
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;}
+.opt{
+  background:var(--surface2);
+  border:1.5px solid var(--border2);
+  border-radius:var(--r);padding:0.85rem 0.9rem;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:0.88rem;font-weight:500;color:var(--text);
+  cursor:pointer;text-align:left;line-height:1.4;
+  transition:border-color 0.15s,background 0.15s,transform 0.1s;
+  display:flex;align-items:flex-start;gap:0.6rem;
+}
+.opt:hover:not(:disabled){
+  border-color:var(--accent);
+  background:var(--accent-bg);
+  transform:translateY(-1px);
+}
+.opt:disabled{cursor:default;}
+.opt.sel{
+  border-color:var(--accent);
+  background:var(--accent-bg);
+  color:var(--accent2);
+}
+.opt.correct{
+  border-color:var(--green);
+  background:var(--green-bg);
+  color:var(--green);
+}
+.opt.wrong{
+  border-color:var(--red);
+  background:var(--red-bg);
+  color:var(--red);
+}
+.opt-ltr{
+  min-width:22px;height:22px;border-radius:5px;
+  background:var(--surface);
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem;font-weight:700;
+  color:var(--muted);display:flex;
+  align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:1px;
+  transition:background 0.15s,color 0.15s;
+}
+.opt.sel .opt-ltr{background:var(--accent);color:#fff;}
+.opt.correct .opt-ltr{background:var(--green);color:#fff;}
+.opt.wrong .opt-ltr{background:var(--red);color:#fff;}
+
+.nav-row{
+  display:flex;gap:0.6rem;align-items:center;
+  margin-top:0.5rem;
+}
+.btn-ghost{
+  background:var(--surface);border:1px solid var(--border2);
+  color:var(--muted);padding:0.7rem 1.1rem;
+  border-radius:var(--r);font-family:'JetBrains Mono',monospace;
+  font-size:0.75rem;cursor:pointer;
+  transition:background 0.15s,border-color 0.15s;
+}
+.btn-ghost:hover:not(:disabled){
+  background:var(--surface2);border-color:var(--border2);color:var(--text);
+}
+.btn-ghost:disabled{opacity:0.3;cursor:default;}
+.btn-submit{
+  flex:1;background:var(--accent);color:#fff;border:none;
+  padding:0.75rem 1.25rem;border-radius:var(--r);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:700;font-size:0.85rem;cursor:pointer;
+  transition:background 0.15s,opacity 0.15s;
+}
+.btn-submit:hover:not(:disabled){background:#5A52E8;}
+.btn-submit:disabled{opacity:0.35;cursor:not-allowed;}
+
+/* ══════════════════════════════════
+   RESULT SCREEN
+══════════════════════════════════ */
+.result-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,0.5);
+  animation:slideUp 0.35s ease;
+}
+.result-hero{
+  padding:2.25rem 2rem;text-align:center;
+  border-bottom:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.rh-glow{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(108,99,255,0.15) 0%,transparent 60%);
+}
+.rh-name{
+  font-size:0.72rem;color:var(--muted);letter-spacing:0.1em;
+  font-family:'JetBrains Mono',monospace;margin-bottom:0.5rem;
+  position:relative;
+}
+.rh-pct{
+  font-size:clamp(3.5rem,10vw,5.5rem);font-weight:800;
+  line-height:1;margin-bottom:0.3rem;position:relative;
+}
+.rh-pct.a{color:var(--green);}
+.rh-pct.b{color:var(--blue);}
+.rh-pct.c{color:var(--gold);}
+.rh-pct.f{color:var(--red);}
+.rh-score{
+  font-family:'JetBrains Mono',monospace;font-size:0.82rem;
+  color:var(--muted);margin-bottom:1rem;position:relative;
+}
+.grade-chip{
+  display:inline-block;padding:0.35rem 1.25rem;
+  border-radius:20px;font-weight:700;font-size:0.82rem;
+  letter-spacing:0.06em;text-transform:uppercase;
+  position:relative;
+}
+.grade-chip.a{background:var(--green-bg);color:var(--green);border:1px solid rgba(34,197,94,0.3);}
+.grade-chip.b{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(59,130,246,0.3);}
+.grade-chip.c{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(255,181,71,0.3);}
+.grade-chip.f{background:var(--red-bg);color:var(--red);border:1px solid rgba(239,68,68,0.3);}
+
+.result-body{padding:1.5rem 1.75rem 1.75rem;}
+
+.r-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;margin-bottom:1.5rem;}
+.rst{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--r);padding:1rem;text-align:center;
+}
+.rst-n{font-size:1.5rem;font-weight:800;font-family:'JetBrains Mono',monospace;}
+.rst-n.g{color:var(--green);}
+.rst-n.r{color:var(--red);}
+.rst-n.w{color:var(--text);}
+.rst-l{font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:2px;}
+
+.review-hd{
+  display:flex;align-items:center;gap:0.6rem;
+  font-size:0.72rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem;
+}
+.review-hd::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.ri{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--r);padding:0.85rem 1rem;
+  margin-bottom:0.5rem;font-size:0.82rem;
+}
+.ri-q{color:var(--text);margin-bottom:0.5rem;font-weight:500;line-height:1.5;}
+.ri-q span{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--muted);margin-right:4px;}
+.ri-row{display:flex;gap:0.5rem;flex-wrap:wrap;font-size:0.75rem;}
+.ri-w{background:var(--red-bg);color:var(--red);padding:2px 8px;border-radius:4px;font-weight:600;}
+.ri-r{background:var(--green-bg);color:var(--green);padding:2px 8px;border-radius:4px;font-weight:600;}
+.ri-arr{color:var(--muted);align-self:center;}
+
+.perfect-banner{
+  background:var(--green-bg);border:1px solid rgba(34,197,94,0.25);
+  border-radius:var(--r);padding:1rem;text-align:center;
+  color:var(--green);font-weight:700;font-size:0.9rem;
+  margin-bottom:1rem;
+}
+
+.result-btns{display:flex;gap:0.6rem;margin-top:1.25rem;}
+.btn-outline{
+  flex:1;background:transparent;
+  border:1.5px solid var(--border2);color:var(--muted);
+  padding:0.85rem;border-radius:var(--r);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:600;font-size:0.85rem;cursor:pointer;
+  transition:border-color 0.15s,color 0.15s,background 0.15s;
+}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent2);background:var(--accent-bg);}
+
+/* ══════════════════════════════════
+   LEADERBOARD SCREEN
+══════════════════════════════════ */
+.lb-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,0.5);
+}
+.lb-hdr{
+  padding:1.5rem 1.75rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.lb-hdr-title{font-size:1.1rem;font-weight:800;color:var(--text);}
+.lb-hdr-sub{font-size:0.72rem;color:var(--muted);margin-top:2px;}
+.lb-filters{display:flex;gap:0.4rem;padding:1rem 1.75rem;border-bottom:1px solid var(--border);}
+.lb-filter{
+  padding:0.35rem 0.85rem;border-radius:20px;
+  font-size:0.72rem;font-weight:600;cursor:pointer;
+  border:1px solid var(--border2);background:transparent;
+  color:var(--muted);transition:all 0.15s;font-family:inherit;
+}
+.lb-filter.active{background:var(--accent-bg);border-color:rgba(108,99,255,0.4);color:var(--accent2);}
+.lb-body{padding:0.75rem 1.75rem 1.5rem;max-height:480px;overflow-y:auto;}
+.lb-empty{
+  text-align:center;padding:3rem 1rem;
+  color:var(--muted);font-size:0.88rem;
+}
+.lb-row{
+  display:flex;align-items:center;gap:0.85rem;
+  padding:0.85rem 0;border-bottom:1px solid var(--border);
+}
+.lb-row:last-child{border-bottom:none;}
+.lb-rank{
+  min-width:28px;text-align:center;
+  font-family:'JetBrains Mono',monospace;
+  font-weight:700;font-size:0.85rem;color:var(--muted);
+}
+.lb-rank.r1{color:#FFD700;}
+.lb-rank.r2{color:#C0C0C0;}
+.lb-rank.r3{color:#CD7F32;}
+.lb-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--accent-bg);border:1.5px solid rgba(108,99,255,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:0.85rem;color:var(--accent2);
+  flex-shrink:0;
+}
+.lb-info{flex:1;min-width:0;}
+.lb-uname{font-weight:600;font-size:0.88rem;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.lb-meta{font-size:0.68rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:1px;}
+.lb-score{text-align:right;flex-shrink:0;}
+.lb-pct{font-size:1rem;font-weight:800;font-family:'JetBrains Mono',monospace;}
+.lb-grade{
+  font-size:0.62rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:0.06em;margin-top:1px;
+}
+
+.lb-back{
+  margin:0 1.75rem 1.5rem;
+  display:block;width:calc(100% - 3.5rem);
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--muted);padding:0.85rem;border-radius:var(--r);
+  font-family:inherit;font-weight:600;font-size:0.85rem;
+  cursor:pointer;transition:all 0.15s;
+}
+.lb-back:hover{border-color:var(--border2);color:var(--text);}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:520px){
+  .opts{grid-template-columns:1fr;}
+  .r-stats{grid-template-columns:repeat(3,1fr);}
+  .wrap{padding:1.25rem 0.75rem 5rem;}
+  .name-body,.result-body,.lb-body,.lb-hdr,.lb-filters{padding-left:1.25rem;padding-right:1.25rem;}
+  .lb-back{margin:0 1.25rem 1.25rem;width:calc(100% - 2.5rem);}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-brand">
+    <div class="hdr-icon">S8</div>
+    <div>
+      <div class="hdr-title">Standard 8</div>
+      <div class="hdr-sub">Practice Questions · Juma Ali</div>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <span class="pill">2025–2026</span>
+    <button class="lb-btn" onclick="showScreen('lb')">🏆 Scores</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ── NAME / START SCREEN ── -->
+  <div id="screen-name" class="screen active">
+    <div class="name-card">
+      <div class="name-hero">
+        <div class="rh-glow"></div>
+        <div class="name-badge">📋 Multiple Choice Practice</div>
+        <h1 class="name-title">Standard 8<br><span>Maths Quiz</span></h1>
+        <p class="name-sub">Practice exam questions from various zones Mock papers.<br>Questions shuffle on every attempt.</p>
+      </div>
+      <div class="name-body">
+        <div class="stats-strip">
+          <div class="ss-tile"><div class="ss-n">20</div><div class="ss-l">Questions</div></div>
+          <div class="ss-tile"><div class="ss-n">40</div><div class="ss-l">Marks</div></div>
+          <div class="ss-tile"><div class="ss-n">MCQ</div><div class="ss-l">Format</div></div>
+        </div>
+
+        <label class="name-label" for="player-name">Your name</label>
+        <input class="name-input" id="player-name" type="text" placeholder="Enter your name…" maxlength="30" oninput="onNameInput()"/>
+
+        <div class="paper-wrap">
+          <span class="paper-label">Select a paper</span>
+          <div class="paper-opts">
+            <label class="paper-opt">
+              <input type="radio" name="paper" value="bumba" checked/>
+              <span class="paper-chip">
+                <span class="pc-num">1</span>
+                <span class="pc-info">
+                  <span class="pc-title">Mathematics 1</span>
+                  <span class="pc-sub">2026 Mock Examination · 20 Questions</span>
+                </span>
+              </span>
+            </label>
+            <label class="paper-opt">
+              <input type="radio" name="paper" value="ngodzi"/>
+              <span class="paper-chip">
+                <span class="pc-num">2</span>
+                <span class="pc-info">
+                  <span class="pc-title">Mathematics 2</span>
+                  <span class="pc-sub">2026 PSLCE Mid Term · 20 Questions</span>
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <button class="btn-primary" id="btn-begin" onclick="beginQuiz()" disabled>Enter your name to start →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── QUIZ SCREEN ── -->
+  <div id="screen-quiz" class="screen">
+    <div class="q-topbar">
+      <span class="q-badge" id="q-badge">01 / 20</span>
+      <div class="q-progress-wrap"><div class="q-progress-fill" id="q-pfill" style="width:5%"></div></div>
+      <span class="q-player-chip"><span class="q-player-dot"></span><span id="q-pname" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:90px"></span></span>
+    </div>
+
+    <div class="q-card" id="q-card"></div>
+
+    <div class="nav-row">
+      <button class="btn-ghost" id="btn-prev" onclick="go(-1)">← Prev</button>
+      <button class="btn-ghost" id="btn-next" onclick="go(1)">Next →</button>
+      <button class="btn-submit" id="btn-submit" onclick="submitQuiz()" disabled>Submit</button>
+    </div>
+  </div>
+
+  <!-- ── RESULT SCREEN ── -->
+  <div id="screen-result" class="screen">
+    <div class="result-card" id="result-card"></div>
+  </div>
+
+  <!-- ── LEADERBOARD SCREEN ── -->
+  <div id="screen-lb" class="screen">
+    <div class="lb-card">
+      <div class="lb-hdr">
+        <div>
+          <div class="lb-hdr-title">🏆 Score History</div>
+          <div class="lb-hdr-sub">All previous attempts, sorted by highest score</div>
+        </div>
+        <button class="lb-btn" onclick="clearScores()" style="font-size:0.65rem;">Clear all</button>
+      </div>
+      <div class="lb-filters">
+        <button class="lb-filter active" onclick="setFilter('all',this)">All Papers</button>
+        <button class="lb-filter" onclick="setFilter('Mathematics 1',this)">Maths 1</button>
+        <button class="lb-filter" onclick="setFilter('Mathematics 2',this)">Maths 2</button>
+      </div>
+      <div class="lb-body" id="lb-body"></div>
+      <button class="lb-back" onclick="showScreen('name')">← Back to Quiz</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ════════════════ QUESTION BANKS ════════════════ */
+const BUMBA_Q = [
+  {q:"Write 278.697 to 3 significant figures.",opts:["279","278.7","278.600","278.700"],ans:1},
+  {q:"Express 16 hours as a fraction of a day.",opts:["1/4","2/3","1/2","1/3"],ans:2},
+  {q:"BC is perpendicular to AB and BD bisects angle B. What is the value of angle ABD?",opts:["90°","45°","120°","60°"],ans:1},
+  {q:"A train covered 50 km in 15 minutes. Find its speed.",opts:["15 km/hr","50 km/hr","75 km/hr","200 km/hr"],ans:3},
+  {q:"The sum of two numbers is 78. One number is the product of 26 and 2. Find the other number.",opts:["52","78","26","130"],ans:2},
+  {q:"What is the place value of 2 in 0.124?",opts:["Tenth","Hundreds","Hundredth","Tens"],ans:2},
+  {q:"Find the perimeter of a square whose side is 0.5 m.",opts:["0.2 m","0.21 m","2 m","20 m"],ans:2},
+  {q:"Simplify 12y + 3x − x + 2y.",opts:["14y − 2x","14y + 2x","14y + 4x","10y + 2x"],ans:1},
+  {q:"17 men can spend 60 kg of flour in a fortnight. How much flour can they spend in a week?",opts:["30 kg","34 kg","51 kg","60 kg"],ans:0},
+  {q:"Solve the inequality: 2y + 5 ≥ 13",opts:["Y ≥ 8","Y ≤ 14","Y ≥ 18","Y ≥ 4"],ans:3},
+  {q:"What was the difference in body mass between Okelo (37.2 kg) and Getu (36.9 kg)?",opts:["0.3 kg","0.4 kg","0.13 kg","0.1 kg"],ans:0},
+  {q:"Calculate the average body mass of Peter (37.4 kg) and Mercy (36.8 kg).",opts:["37 kg","38 kg","37.1 kg","74.2 kg"],ans:2},
+  {q:"Sautso measured an angle of 101°. What type of angle is it?",opts:["Acute","Obtuse","Reflex","Right angle"],ans:1},
+  {q:"Take away 20 from the product of 12 and 10.",opts:["80","100","120","2"],ans:1},
+  {q:"Given 37, 17, 24 and 20, find the median.",opts:["22","21","23","19"],ans:0},
+  {q:"A container is filled to the 500 ml mark. How many litres of water are in it?",opts:["5 litres","50 litres","500 litres","0.5 litres"],ans:3},
+  {q:"Praise bought 20 mangoes at 5 for K200. How much did she pay for all the mangoes?",opts:["K8","K80","K800","K8,000"],ans:2},
+  {q:"Esnart insured 2 trucks (K40,000/month each) and 1 house (K90,000/month) for one month. Total paid?",opts:["K80,000","K170,000","K130,000","K220,000"],ans:1},
+  {q:"Mr Chaula will celebrate his diamond jubilee in the next two decades. How old is he now?",opts:["60 years","25 years","45 years","40 years"],ans:3},
+  {q:"How many seconds are in 10 minutes?",opts:["60 seconds","600 seconds","6,000 seconds","6 seconds"],ans:1},
+];
+const NGODZI_Q = [
+  {q:"Which of these fractions is equivalent to 36%?",opts:["1/5","9/25","4/5","2/5"],ans:1},
+  {q:"What type of angle is 83°?",opts:["Reflex","Acute","Obtuse","Right"],ans:1},
+  {q:"Which pair of fractions gives 5/6 when added?",opts:["2/3 and 1/3","4/5 and 1/6","1/6 and 2/3","2/5 and 1/5"],ans:2},
+  {q:"Change 0.3 decametres into kilometres.",opts:["0.03 km","0.003 km","300 km","30 km"],ans:1},
+  {q:"Three quarters of a bottle of milk was shared equally among 3 children. Find each child's share.",opts:["2 1/4","3/12","9/4","1/4"],ans:3},
+  {q:"Find the perimeter of a square whose area is 121 cm².",opts:["44 cm","22 cm","66 cm","11 cm"],ans:0},
+  {q:"Write 98 in Roman Numerals.",opts:["LXXXVIII","MXVIII","VIIIXC","XCVIII"],ans:3},
+  {q:"Car N travels at 40 km/hr for 4 hours. Calculate the distance covered.",opts:["160 km","10 km","44 km","36 km"],ans:0},
+  {q:"Car N takes 4 hrs and Car P covers 60 km at 30 km/hr. Find the difference in times taken.",opts:["8 hrs","2 hrs","30 minutes","6 hrs"],ans:1},
+  {q:"Complete the number pattern: ___, 51, 153, ___, 1377",opts:["49 and 204","17 and 102","17 and 459","102 and 459"],ans:2},
+  {q:"TNM charges K50 per minute. A boy was charged K450. How long did he talk?",opts:["50 min","40 min","6 min","9 min"],ans:3},
+  {q:"Find the value of Y: 18 + 3y − 1 = 20 + 2y",opts:["22","39","8","32"],ans:2},
+  {q:"Candidates scored: 45, 22, 30, 55 and 20. Find the mean mark.",opts:["34.4","165","170","34"],ans:0},
+  {q:"Which pair of numbers are both prime numbers?",opts:["14 and 15","16 and 13","12 and 17","17 and 19"],ans:3},
+  {q:"Weekly tree planting: Tuesday = 120, Friday = 20. How many fewer trees on Friday than Tuesday?",opts:["80","120","100","6"],ans:2},
+  {q:"Tree planting: Thursday = 80, Saturday = 20. Find the quotient (Thursday ÷ Saturday).",opts:["120","2","4","40"],ans:2},
+  {q:"In 1997, Mr Msowoya was 37 years old. In which year will he hold his golden jubilee celebration?",opts:["1962","2010","2020","2022"],ans:1},
+  {q:"Five dresses marked at K459 each were all sold at K300 each. Find the total discount.",opts:["K795","K159","K1,995","K158"],ans:2},
+  {q:"Subtract 417 g from 0.699 kg.",opts:["282 g","347.1 g","416.3 g","1,116 g"],ans:0},
+  {q:"A triangular piece of cloth has sides 9 m, 20 m and 15 m. Find the total ribbon length needed.",opts:["22 m","44 m","88 m","150 m"],ans:1},
+];
+
+const LETTERS = ['A','B','C','D'];
+const LS_KEY = 'std8_quiz_scores';
+
+let playerName = '';
+let currentPaper = '';
+let questions = [];
+let userAns = [];
+let cur = 0;
+let lbFilter = 'all';
+
+/* ── UTILS ── */
+function shuffle(arr) {
+  let a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+  if (id === 'lb') renderLeaderboard();
+  window.scrollTo(0,0);
+}
+function gradeInfo(pct) {
+  if (pct >= 80) return {cls:'a', label:'Excellent'};
+  if (pct >= 60) return {cls:'b', label:'Good'};
+  if (pct >= 50) return {cls:'c', label:'Pass'};
+  return {cls:'f', label:'Needs Practice'};
+}
+function initials(name) {
+  return name.trim().split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2) || '??';
+}
+function fmtDate(ts) {
+  return new Date(ts).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+}
+
+/* ── NAME INPUT ── */
+function onNameInput() {
+  const v = document.getElementById('player-name').value.trim();
+  const btn = document.getElementById('btn-begin');
+  btn.disabled = v.length < 2;
+  btn.textContent = v.length >= 2 ? 'Start Quiz →' : 'Enter your name to start →';
+}
+
+/* ── START QUIZ ── */
+function beginQuiz() {
+  playerName = document.getElementById('player-name').value.trim();
+  if (playerName.length < 2) return;
+  const val = document.querySelector('input[name="paper"]:checked').value;
+  currentPaper = val === 'bumba' ? 'Mathematics 1' : 'Mathematics 2';
+  const pool = val === 'bumba' ? BUMBA_Q : NGODZI_Q;
+  questions = shuffle(pool).map(q => {
+    const idx = shuffle([0,1,2,3]);
+    return { q:q.q, opts:idx.map(i=>q.opts[i]), ans:idx.indexOf(q.ans) };
+  });
+  userAns = new Array(questions.length).fill(-1);
+  cur = 0;
+  document.getElementById('q-pname').textContent = playerName;
+  showScreen('quiz');
+  render();
+}
+
+/* ── RENDER QUESTION ── */
+function render() {
+  const q = questions[cur];
+  const total = questions.length;
+  const answered = userAns.filter(a=>a!==-1).length;
+  document.getElementById('q-badge').textContent =
+    String(cur+1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+  document.getElementById('q-pfill').style.width = ((cur+1)/total*100) + '%';
+  let optsHtml = '';
+  q.opts.forEach((o,i) => {
+    let cls = 'opt';
+    if (userAns[cur] === i) cls += ' sel';
+    optsHtml += `<button class="${cls}" onclick="pick(${i})"><span class="opt-ltr">${LETTERS[i]}</span>${o}</button>`;
+  });
+  document.getElementById('q-card').innerHTML = `
+    <div class="q-meta">
+      <span class="q-num">QUESTION ${cur+1} OF ${total}</span>
+      <span class="q-paper-tag">${currentPaper}</span>
+    </div>
+    <div class="q-text">${q.q}</div>
+    <div class="opts">${optsHtml}</div>
+  `;
+  document.getElementById('btn-prev').disabled = cur === 0;
+  document.getElementById('btn-next').disabled = cur === total-1;
+  const allDone = userAns.every(a=>a!==-1);
+  const sub = document.getElementById('btn-submit');
+  sub.disabled = !allDone;
+  sub.textContent = allDone ? 'Submit Quiz ✓' : answered+'/'+total+' answered';
+}
+
+function pick(i) { userAns[cur]=i; render(); }
+function go(dir) { cur=Math.max(0,Math.min(questions.length-1,cur+dir)); render(); }
+
+/* ── SUBMIT ── */
+function submitQuiz() {
+  if (!userAns.every(a=>a!==-1)) return;
+  let correct = 0;
+  userAns.forEach((a,i) => { if (a===questions[i].ans) correct++; });
+  saveScore(correct);
+  showResult(correct);
+}
+
+/* ── SAVE SCORE ── */
+function saveScore(correct) {
+  const total = questions.length;
+  const pct = Math.round(correct/total*100);
+  const {label} = gradeInfo(pct);
+  const record = {
+    name: playerName,
+    paper: currentPaper,
+    correct, total, pct,
+    grade: label,
+    ts: Date.now()
+  };
+  let scores = [];
+  try { scores = JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch(e){}
+  scores.push(record);
+  try { localStorage.setItem(LS_KEY, JSON.stringify(scores)); } catch(e){}
+}
+
+/* ── SHOW RESULT ── */
+function showResult(correct) {
+  const total = questions.length;
+  const pct = Math.round(correct/total*100);
+  const {cls, label} = gradeInfo(pct);
+  const wrong = questions.reduce((acc,q,i) => {
+    if (userAns[i]!==q.ans) acc.push({q,i,ua:userAns[i]});
+    return acc;
+  },[]);
+  let reviewHtml = '';
+  if (wrong.length === 0) {
+    reviewHtml = '<div class="perfect-banner">🎉 Perfect score! All 20 answers correct.</div>';
+  } else {
+    reviewHtml = '<div class="review-hd">Review incorrect answers</div>';
+    wrong.forEach(({q,i,ua}) => {
+      reviewHtml += `<div class="ri">
+        <div class="ri-q"><span>Q${i+1}</span>${q.q}</div>
+        <div class="ri-row">
+          <span class="ri-w">✗ ${q.opts[ua]}</span>
+          <span class="ri-arr">→</span>
+          <span class="ri-r">✓ ${q.opts[q.ans]}</span>
+        </div>
+      </div>`;
+    });
+  }
+  document.getElementById('result-card').innerHTML = `
+    <div class="result-hero">
+      <div class="rh-glow"></div>
+      <div class="rh-name">${playerName.toUpperCase()} · ${currentPaper}</div>
+      <div class="rh-pct ${cls}">${pct}%</div>
+      <div class="rh-score">${correct} of ${total} correct</div>
+      <span class="grade-chip ${cls}">${label}</span>
+    </div>
+    <div class="result-body">
+      <div class="r-stats">
+        <div class="rst"><div class="rst-n g">${correct}</div><div class="rst-l">Correct</div></div>
+        <div class="rst"><div class="rst-n r">${total-correct}</div><div class="rst-l">Wrong</div></div>
+        <div class="rst"><div class="rst-n w">${total}</div><div class="rst-l">Total</div></div>
+      </div>
+      ${reviewHtml}
+      <div class="result-btns">
+        <button class="btn-outline" onclick="showScreen('lb')">🏆 View Scores</button>
+        <button class="btn-primary" style="flex:1" onclick="showScreen('name')">Try Again →</button>
+      </div>
+    </div>
+  `;
+  showScreen('result');
+}
+
+/* ── LEADERBOARD ── */
+function getScores() {
+  try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch(e){ return []; }
+}
+function setFilter(f, btn) {
+  lbFilter = f;
+  document.querySelectorAll('.lb-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderLeaderboard();
+}
+function renderLeaderboard() {
+  let scores = getScores();
+  if (lbFilter !== 'all') scores = scores.filter(s => s.paper === lbFilter);
+  scores.sort((a,b) => b.pct - a.pct);
+  const body = document.getElementById('lb-body');
+  if (!scores.length) {
+    body.innerHTML = '<div class="lb-empty">No attempts yet.<br>Complete a quiz to see scores here.</div>';
+    return;
+  }
+  body.innerHTML = scores.map((s,i) => {
+    const {cls, label} = gradeInfo(s.pct);
+    const rankCls = i===0?'r1':i===1?'r2':i===2?'r3':'';
+    const rankIcon = i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1);
+    const pctColor = cls==='a'?'var(--green)':cls==='b'?'var(--blue)':cls==='c'?'var(--gold)':'var(--red)';
+    const gradeColor = pctColor;
+    return `<div class="lb-row">
+      <span class="lb-rank ${rankCls}">${rankIcon}</span>
+      <div class="lb-avatar">${initials(s.name)}</div>
+      <div class="lb-info">
+        <div class="lb-uname">${s.name}</div>
+        <div class="lb-meta">${s.paper} · ${fmtDate(s.ts)}</div>
+      </div>
+      <div class="lb-score">
+        <div class="lb-pct" style="color:${pctColor}">${s.pct}%</div>
+        <div class="lb-grade" style="color:${gradeColor}">${label}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function clearScores() {
+  if (!confirm('Clear all score records?')) return;
+  try { localStorage.removeItem(LS_KEY); } catch(e){}
+  renderLeaderboard();
+}
+</script>
+</body>
+</html>
